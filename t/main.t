@@ -69,8 +69,10 @@ is( violations(q{my @x = ( 'a', 'b', 'c' );  ## no critic (RequireQwForLiteralLi
         -severity        => 1,
     );
 
-    is( scalar $strict->critique( \"use strict;\nmy \@x = ( 'a', 'b' );\n" ),
-        1, 'a pair is a violation once the threshold says so' );
+    is(
+        scalar $strict->critique( \"use strict;\nmy \@x = ( 'a', 'b' );\n" ),
+        1, 'a pair is a violation once the threshold says so'
+    );
 }
 
 {
@@ -80,8 +82,10 @@ is( violations(q{my @x = ( 'a', 'b', 'c' );  ## no critic (RequireQwForLiteralLi
         -severity        => 1,
     );
 
-    is( scalar $loose->critique( \"use strict;\nmy \@x = ( 'a', 'b', 'c' );\n" ),
-        0, 'and three is not once it says that' );
+    is(
+        scalar $loose->critique( \"use strict;\nmy \@x = ( 'a', 'b', 'c' );\n" ),
+        0, 'and three is not once it says that'
+    );
 }
 
 done_testing();

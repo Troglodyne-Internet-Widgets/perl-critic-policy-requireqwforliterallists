@@ -97,13 +97,15 @@ PPI::Token::Quote::Single, PPI::Token::Quote::Double, PPI::Token::Quote::Literal
 =cut
 
 sub supported_parameters {
-    return ({
-        name            => 'min_run_length',
-        description     => 'How many adjacent literals before this is a qw() list.',
-        default_string  => '3',
-        behavior        => 'integer',
-        integer_minimum => 2,
-    });
+    return (
+        {
+            name            => 'min_run_length',
+            description     => 'How many adjacent literals before this is a qw() list.',
+            default_string  => '3',
+            behavior        => 'integer',
+            integer_minimum => 2,
+        }
+    );
 }
 
 sub default_severity { return $SEVERITY_LOW }
@@ -127,7 +129,7 @@ sub _is_qw_able {
 
     my $string = $elem->string();
     return 0 if !defined $string || !length $string;
-    return 0 if $string =~ $NOT_QW_ABLE_RX;
+    return 0 if $string                                            =~ $NOT_QW_ABLE_RX;
     return 0 if $elem->isa('PPI::Token::Quote::Double') && $string =~ $INTERPOLATES_RX;
 
     return 1;
