@@ -3,7 +3,7 @@ package Perl::Critic::Policy::RequireQwForLiteralLists;
 # ABSTRACT: A row of quoted words is a qw() list written the long way.
 
 use strict;
-use warnings;
+use warnings FATAL => q{all};
 
 use 5.014;
 
@@ -71,10 +71,10 @@ Readonly::Scalar my $EXPL => q{Write qw{a b c} instead of 'a', 'b', 'c'};
 
 # Anything qw{} could not hold without changing what it means: whitespace to
 # split on, a quote or backslash to re-interpret, or an empty string to lose.
-Readonly::Scalar my $NOT_QW_ABLE_RX => qr/[\s\\'"]/xms;
+Readonly::Scalar my $NOT_QW_ABLE_RX => qr/[\s\\'"]/xs;
 
 # Interpolation, which qw{} does not do.
-Readonly::Scalar my $INTERPOLATES_RX => qr/[\$\@]/xms;
+Readonly::Scalar my $INTERPOLATES_RX => qr/[\$\@]/xs;
 
 =head2 METHODS
 
@@ -128,7 +128,7 @@ sub _is_qw_able {
     return 0 if !$elem->isa('PPI::Token::Quote');
 
     my $string = $elem->string();
-    return 0 if !defined $string || !length $string;
+    return 0 if $string eq q{};
     return 0 if $string                                            =~ $NOT_QW_ABLE_RX;
     return 0 if $elem->isa('PPI::Token::Quote::Double') && $string =~ $INTERPOLATES_RX;
 
