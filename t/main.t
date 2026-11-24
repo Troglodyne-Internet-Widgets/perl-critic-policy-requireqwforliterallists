@@ -1,5 +1,5 @@
 use strict;
-use warnings;
+use warnings FATAL => q{all};
 
 use re '/aa';
 
@@ -8,7 +8,6 @@ use 5.014;
 use Test::More;
 
 use Perl::Critic;
-use Perl::Critic::Policy::RequireQwForLiteralLists;
 
 # -profile => q{} because Perl::Critic otherwise walks up from cwd looking for
 # a .perlcriticrc, finds this dist's own, and runs every policy in it against
@@ -89,3 +88,5 @@ is( violations(q{my @x = ( 'a', 'b', 'c' );  ## no critic (RequireQwForLiteralLi
 }
 
 done_testing();
+
+1;
